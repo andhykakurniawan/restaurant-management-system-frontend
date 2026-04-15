@@ -1,8 +1,7 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
-import DashboardPage from "./pages/DashboardPage";
-import ProtectedRoute from "./routes/ProtectedRoute";
 import PublicRoute from "./routes/PublicRoute";
+import AppRouter from "./app/router";
 
 export default function App() {
   return (
@@ -14,14 +13,8 @@ export default function App() {
           <Route path="/" element={<LoginPage />} />
         </Route>
 
-        {/* PROTECTED ADMIN AREA */}
-        <Route
-          path="/admin"
-          element={<ProtectedRoute allowedRoles={["ADMIN", "SUPER_ADMIN"]} />}
-        >
-          <Route index element={<Navigate to="dashboard" replace />} />
-          <Route path=":section" element={<DashboardPage />} />
-        </Route>
+        {/* ADMIN AREA */}
+        <Route path="/admin/*" element={<AppRouter />} />
 
         {/* REDIRECT OLD DASHBOARD */}
         <Route

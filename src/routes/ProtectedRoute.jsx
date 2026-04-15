@@ -1,6 +1,5 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
-import DashboardLayout from "../components/layout/DashboardLayout";
 
 export default function ProtectedRoute({ allowedRoles }) {
   const location = useLocation();
@@ -17,9 +16,5 @@ export default function ProtectedRoute({ allowedRoles }) {
     return <Navigate to="/admin/dashboard" replace />;
   }
 
-  return (
-    <DashboardLayout>
-      <Outlet />
-    </DashboardLayout>
-  );
+  return <Outlet />;
 }

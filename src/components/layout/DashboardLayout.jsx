@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import ShellSidebar from "./ShellSidebar";
 import ShellTopNavbar from "./ShellTopNavbar";
 
-export default function DashboardLayout({ children }) {
+export default function DashboardLayout() {
   const [collapsed, setCollapsed] = useState(
     localStorage.getItem("sidebar-collapsed") === "true"
   );
@@ -35,7 +35,7 @@ export default function DashboardLayout({ children }) {
         <ShellTopNavbar onMenuClick={() => setMobileOpen(true)} />
 
         <main className="px-4 py-6 md:px-8 md:py-8">
-          {children ?? <Outlet />}
+          <Outlet />
         </main>
       </div>
     </div>
