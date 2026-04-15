@@ -3,6 +3,11 @@ import {
   Utensils,
   FolderTree,
   Settings,
+  ShoppingCart,
+  Wallet,
+  BookCheck,
+  Refrigerator,
+  User,
 } from "lucide-react";
 
 export const sidebarMenu = [
@@ -21,10 +26,45 @@ export const sidebarMenu = [
     roles: ["SUPER_ADMIN", "ADMIN"],
   },
   {
-    label: "Manage Menu",
+    label: "Menu",
     shortLabel: "MN",
-    path: "/admin/menu",
+    path: "/admin/menus",
     icon: Utensils,
+    roles: ["SUPER_ADMIN", "ADMIN"],
+  },
+  {
+    label: "Ingredients",
+    shortLabel: "ID",
+    path: "/admin/ingredients",
+    icon: Refrigerator,
+    roles: ["SUPER_ADMIN", "ADMIN"],
+  },
+  {
+    label: "Menu Ingredients",
+    shortLabel: "MI",
+    path: "/admin/menuingredients",
+    icon: BookCheck,
+    roles: ["SUPER_ADMIN", "ADMIN"],
+  },
+  {
+    label: "Data Order",
+    shortLabel: "DO",
+    path: "/admin/orders",
+    icon: ShoppingCart,
+    roles: ["SUPER_ADMIN", "ADMIN"],
+  },
+  {
+    label: "Data Payments",
+    shortLabel: "DP",
+    path: "/admin/payments",
+    icon: Wallet,
+    roles: ["SUPER_ADMIN", "ADMIN"],
+  },
+  {
+    label: "User Management",
+    shortLabel: "UM",
+    path: "/admin/users",
+    icon: User,
     roles: ["SUPER_ADMIN", "ADMIN"],
   },
   {
