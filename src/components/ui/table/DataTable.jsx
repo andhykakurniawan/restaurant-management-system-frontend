@@ -1,4 +1,4 @@
-import { Trash2, Edit2, RefreshCw } from "lucide-react"
+import { Trash2, Edit2, RefreshCw, Eye } from "lucide-react"
 
 export default function DataTable({
   columns = [],
@@ -7,6 +7,7 @@ export default function DataTable({
   onEdit,
   onDelete,
   onRestore,
+  onView,
 }) {
   const safeData = Array.isArray(data) ? data : []
 
@@ -28,7 +29,7 @@ export default function DataTable({
     <div className="rounded-2xl bg-zinc-950 p-1 shadow-[0_8px_30px_rgb(0,0,0,0.5)] border border-zinc-900">
       <div className="overflow-hidden rounded-xl border border-white/5 bg-zinc-900/50 backdrop-blur-sm">
         <table className="w-full text-left text-sm">
-          
+
           {/* HEADER */}
           <thead className="border-b border-white/5 bg-white/2">
             <tr>
@@ -68,10 +69,20 @@ export default function DataTable({
                   </td>
                 ))}
 
-                {(onEdit || onDelete || onRestore) && (
+                {(onView || onEdit || onDelete || onRestore) && (
                   <td className="px-6 py-5 text-right">
                     <div className="flex justify-end gap-2.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      
+
+                      {onView && (
+                        <button
+                          onClick={() => onView(row)}
+                          className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium text-temu-bronze hover:bg-temu-bronze/10 transition"
+                        >
+                          <Eye size={14} />
+                          Detail
+                        </button>
+                      )}
+
                       {row.isActive && onEdit && (
                         <button
                           onClick={() => onEdit(row)}
