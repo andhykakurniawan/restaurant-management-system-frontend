@@ -5,6 +5,7 @@ import MenuDetail from "./components/MenuDetail" // Import detail modal baru
 import { ConfirmModal } from "@/components/ui/modals"
 import { useMenu } from "./hooks/useMenu"
 import { Search, Plus } from "lucide-react"
+import toast from "react-hot-toast"
 
 export default function MenuPage() {
   const {
@@ -15,6 +16,7 @@ export default function MenuPage() {
     updateMenu,
     deleteMenu,
     restoreMenu,
+    fetchMenus,
   } = useMenu()
 
   // State Management
@@ -22,7 +24,6 @@ export default function MenuPage() {
   const [isDetailOpen, setDetailOpen] = useState(false) // State untuk detail
   const [isConfirmOpen, setConfirmOpen] = useState(false)
   const [selectedMenu, setSelectedMenu] = useState(null)
-
   const [searchTerm, setSearchTerm] = useState("")
   const [statusFilter, setStatusFilter] = useState("all")
 
@@ -88,6 +89,19 @@ export default function MenuPage() {
       console.error("Gagal menyimpan menu:", error)
     }
   }
+
+  const handleUpdateRecipe = async (menuId, newRecipe) => {
+    try {
+      // Karena ini real-time, lu bisa panggil API add/delete di sini
+      // Atau jika lu kirim sekaligus saat "Save" di Modal:
+      await updateMenu(menuId, { menuIngredients: newRecipe });
+
+      await fetchMenus(); // Refresh data biar detailnya update
+      toast.success("Recipe updated!");
+    } catch (error) {
+      console.error("Gagal update resep:", error);
+    }
+  };
 
   return (
     <div className="p-8 md:p-10 space-y-8 max-w-6xl mx-auto">
@@ -172,7 +186,8 @@ export default function MenuPage() {
       <MenuDetail
         isOpen={isDetailOpen}
         onClose={() => setDetailOpen(false)}
-        menu={selectedMenu}
+        menu={selectedMenu} // Membawa data menu + array resep
+        onUpdateRecipe={handleUpdateRecipe} // Fungsi untuk simpan perubahan ke DB
         categoryName={categories.find(c => c.id === selectedMenu?.categoryId)?.name}
       />
 

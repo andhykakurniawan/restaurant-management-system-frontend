@@ -4,6 +4,8 @@ import {
     Menu,
     MenuCreate,
     MenuUpdate,
+    MenuIngredientCreate,
+    MenuIngredientUpdate
 } from "../type"
 
 export const menuApi = {

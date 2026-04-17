@@ -1,109 +1,112 @@
 import { Utensils, CheckCircle2, AlertCircle, Tag, Banknote, X, Info } from "lucide-react"
 import { BaseModal } from "@/components/ui/modals"
+import MenuIngredientTable from "./MenuIngredientTable"
+import { useMenuIngredient } from "../hooks/useMenuIngredient"
 
-export default function MenuDetail({ isOpen, onClose, menu, categoryName }) {
-  if (!menu) return null
+export default function MenuDetail({
+  isOpen,
+  onClose,
+  menu,
+  categoryName,
+}) {
+  const {
+    menuingredients,
+    ingredients,
+    createMenuIngredient,
+    deleteMenuIngredient,
+    restoreMenuIngredient,
+    updateMenuIngredient,
+  } = useMenuIngredient(menu?.id)
+
+  console.log("ingredients:", ingredients)
+
+  if (!isOpen || !menu) return null
+
+  const handleAddIngredient = (ingredientId, quantity) => {
+    console.log("Menu ID:", menu?.id);
+    console.log("Ingredient ID:", ingredientId);
+
+    if (!menu?.id) {
+      alert("Menu ID tidak ditemukan!");
+      return;
+    }
+
+    createMenuIngredient({
+      menuId: menu.id,
+      ingredientId: ingredientId,
+      quantity,
+    })
+  }
 
   return (
-    <BaseModal isOpen={isOpen} onClose={onClose} className="max-w-md">
-      <div className="relative w-full max-w-md overflow-hidden rounded-[2.5rem] border border-white/10 bg-[#141312] shadow-2xl animate-in fade-in zoom-in-95 duration-300">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/90 backdrop-blur-xl transition-all">
+      <div className="bg-[#141312] border border-white/5 w-full max-w-5xl rounded-[48px] overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] animate-in fade-in zoom-in duration-300">
 
-        {/* 1. Header Glow & Background Decor */}
-        <div className="h-32 w-full absolute top-0 left-0 opacity-10 bg-temu-bronze" />
+        <div className="flex h-full max-h-[200vh]">
 
-        <div className="relative p-8">
-          {/* Header Section */}
-          <div className="flex justify-between items-start mb-6">
-            <div className="flex items-center gap-4">
-              <div className="h-14 w-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-temu-bronze">
-                <Utensils size={24} />
-              </div>
-              <div>
-                <h2 className="text-xl font-bold text-white tracking-tight leading-none">{menu.name}</h2>
-                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-temu-coffee mt-2">
-                  Menu Detail Information
-                </p>
-              </div>
+          {/* KOLOM KIRI: INFO MENU (Portrait-ish inside Landscape) */}
+          <div className="w-[35%] border-r border-white/5 p-10 space-y-8 overflow-y-auto bg-linear-to-b from-white/2 to-transparent">
+            <div>
+              <h2 className="text-3xl font-black text-temu-cream tracking-tighter uppercase leading-none mb-2">{menu.name}</h2>
+              <p className="text-[10px] text-temu-bronze font-black uppercase tracking-[0.3em]">Menu Identity</p>
             </div>
-            <button
-              onClick={onClose}
-              className="bg-white/5 hover:bg-white/10 p-2 rounded-full text-zinc-500 hover:text-white transition-all"
-            >
-              <X size={20} />
-            </button>
-          </div>
 
-          {/* 2. Content Area */}
-          <div className="space-y-6">
-            {/* Image Preview */}
-            <div className="relative aspect-video w-full overflow-hidden rounded-4xl border border-white/5 bg-[#0d0c0b] shadow-inner">
+            <div className="relative aspect-square w-full rounded-[40px] overflow-hidden border border-white/10 group">
               <img
-                src={menu.imageUrl || "https://placehold.co/600x400?text=No+Image+Available"}
-                alt={menu.name}
-                className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                src={menu.imageUrl || "https://placehold.co/600x400/1a1a1a/666"}
+                className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
               />
-              {/* Availability Badge */}
-              <div className="absolute bottom-4 left-4">
-                <span className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest border backdrop-blur-md ${menu.isAvailable
-                  ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
-                  : "bg-red-500/10 text-red-400 border-red-500/20"
-                  }`}>
-                  {menu.isAvailable ? <CheckCircle2 size={12} /> : <AlertCircle size={12} />}
-                  {menu.isAvailable ? "Available" : "Sold Out"}
-                </span>
+              <div className="absolute bottom-6 left-6 bg-emerald-500/20 backdrop-blur-md text-emerald-400 text-[10px] font-black px-4 py-2 rounded-full border border-emerald-500/30 shadow-lg">
+                ● {menu.isAvailable ? "AVAILABLE" : "UNAVAILABLE"}
               </div>
             </div>
 
-            {/* Price & Category Grid */}
             <div className="grid grid-cols-2 gap-4">
-              <div className="p-4 rounded-2xl bg-white/5 border border-white/5 group hover:border-white/10 transition-colors">
-                <div className="flex items-center gap-2 mb-1 text-zinc-500">
-                  <Banknote size={14} />
-                  <span className="text-[9px] font-black uppercase tracking-widest">Price</span>
-                </div>
-                <p className="text-lg font-mono font-bold text-emerald-400">
-                  Rp {menu.price?.toLocaleString("id-ID")}
-                </p>
+              <div className="p-5 rounded-4xl bg-white/3 border border-white/5">
+                <p className="text-[9px] text-zinc-500 font-black uppercase tracking-widest mb-1">Price</p>
+                <p className="text-xl font-bold text-emerald-400">Rp {menu.price?.toLocaleString()}</p>
               </div>
-
-              <div className="p-4 rounded-2xl bg-white/5 border border-white/5 group hover:border-white/10 transition-colors">
-                <div className="flex items-center gap-2 mb-1 text-zinc-500">
-                  <Tag size={14} />
-                  <span className="text-[9px] font-black uppercase tracking-widest">Category</span>
-                </div>
-                <p className="text-lg font-bold text-temu-cream">
-                  {categoryName || "General"}
-                </p>
+              <div className="p-5 rounded-4xl bg-white/3 border border-white/5">
+                <p className="text-[9px] text-zinc-500 font-black uppercase tracking-widest mb-1">Category</p>
+                <p className="text-xl font-bold text-white leading-tight">{categoryName || "Maincourse"}</p>
               </div>
             </div>
 
-            {/* Description Section */}
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 ml-1 text-temu-coffee">
-                <Info size={12} />
-                <span className="text-[10px] font-black uppercase tracking-[0.2em]">
-                  Description
-                </span>
-              </div>
-              <div className="p-5 rounded-2xl bg-[#0d0c0b] border border-white/5 min-h-25">
-                <p className="text-sm text-zinc-400 leading-relaxed italic">
-                  {menu.description ? `"${menu.description}"` : "No description provided for this menu item."}
-                </p>
-              </div>
+            <div className="p-6 rounded-4xl bg-black/40 border border-white/5 italic text-sm text-zinc-400 leading-relaxed">
+              "{menu.description || "No description provided."}"
             </div>
           </div>
 
-          {/* 3. Footer */}
-          <div className="mt-8 pt-6 border-t border-white/5">
-            <button
-              onClick={onClose}
-              className="w-full py-4 rounded-2xl bg-white/5 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 hover:text-white hover:bg-white/10 transition-all"
-            >
-              Close Detail
-            </button>
+          {/* KOLOM KANAN: COMPOSITION MANAGEMENT */}
+          <div className="flex-1 p-10 flex flex-col overflow-hidden">
+            <div className="flex justify-between items-center mb-8">
+              <div>
+                <h3 className="text-lg font-black text-temu-cream uppercase tracking-tight">Ingredient Composition</h3>
+                <p className="text-[10px] text-zinc-500 font-black uppercase tracking-widest mt-1">Manage recipe materials and portions</p>
+              </div>
+              <button
+                onClick={onClose}
+                className="p-3 bg-white/5 hover:bg-white/10 rounded-2xl text-zinc-500 transition-all active:scale-90"
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar">
+              <MenuIngredientTable
+                data={menuingredients}
+                ingredients={ingredients}
+                onAdd={handleAddIngredient}
+                onDelete={deleteMenuIngredient}
+                onRestore={restoreMenuIngredient}
+                onEdit={(update) => {
+                  updateMenuIngredient(update);
+                }}
+              />
+            </div>
           </div>
         </div>
       </div>
-    </BaseModal>
-  )
+    </div>
+  );
 }

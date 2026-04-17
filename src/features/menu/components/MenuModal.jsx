@@ -39,7 +39,7 @@ export default function MenuModal({
             alert("Category wajib dipilih")
             return
         }
-
+        
         // Kita pastiin isAvailable itu Boolean, bukan String atau Null
         const finalData = {
             ...formData,
@@ -96,7 +96,7 @@ export default function MenuModal({
                             <label className={labelClass}>Category</label>
                             <select
                                 name="categoryId"
-                                value={formData.categoryId || ""}
+                                value={formData.categoryId}
                                 onChange={handleChange}
                                 className={inputClass}
                                 required
