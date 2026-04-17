@@ -7,7 +7,7 @@ import SettingPage from "@/pages/SettingPage"
 import CategoryPage from "@/features/category/CategoryPage"
 import MenuPage from "@/features/menu/MenuPage"
 import IngredientPage from "@/features/ingredient/IngredientPage"
-import MenuIngredientPage from "@/features/menuingredient/MenuIngredientPage"
+import MenuBookPage from "@/features/menucatogries/MenuBookPage"
 import OrderPage from "@/features/order/OrderPage"
 import PaymentPage from "@/features/payment/PaymentPage"
 import UserPage from "@/features/user/UserPage"
@@ -20,7 +20,7 @@ export default function AppRouter() {
                     <Route path="dashboard" element={<DashboardPage />} />
                     <Route path="categories" element={<CategoryPage />} />
                     <Route path="menus" element={<MenuPage />} />
-                    <Route path="menuingredients" element={<MenuIngredientPage />} />
+                    <Route path="menucategories" element={<MenuBookPage />} />
                     <Route path="ingredients" element={<IngredientPage />} />
                     <Route path="payments" element={<PaymentPage />} />
                     <Route path="orders" element={<OrderPage />} />

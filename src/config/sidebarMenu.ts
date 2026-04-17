@@ -40,9 +40,9 @@ export const sidebarMenu = [
     roles: ["SUPER_ADMIN", "ADMIN"],
   },
   {
-    label: "Menu Ingredients",
+    label: "Menu Book",
     shortLabel: "MI",
-    path: "/admin/menuingredients",
+    path: "/admin/menucategories",
     icon: BookCheck,
     roles: ["SUPER_ADMIN", "ADMIN"],
   },
