@@ -1,63 +1,97 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { AuthContext } from "./auth-context";
 
-const TOKEN_KEY = "token";
-const USER_KEY = "auth_user";
-
-function readStoredUser() {
-  const storedUser = localStorage.getItem(USER_KEY);
-
-  if (!storedUser) {
-    return null;
-  }
-
-  try {
-    return JSON.parse(storedUser);
-  } catch {
-    localStorage.removeItem(USER_KEY);
-    return null;
-  }
-}
+const TOKEN_KEY = "accessToken";
 
 export default function AuthProvider({ children }) {
-  const [token, setToken] = useState(() => localStorage.getItem(TOKEN_KEY));
-  const [user, setUser] = useState(
-    () =>
-      readStoredUser() ?? {
-        name: "Admin",
-        role: "ADMIN",
-      }
+
+  const [token, setToken] = useState(
+    () => localStorage.getItem(TOKEN_KEY)
   );
 
+  const [user, setUser] = useState(null);
+
+  const [loading, setLoading] = useState(true);
+
+  const initialized = useRef(false);
+
   function login(nextToken, nextUser) {
-    const safeUser = {
-      name: nextUser?.name || nextUser?.username || "Admin",
-      role: nextUser?.role || "ADMIN",
-    };
 
     localStorage.setItem(TOKEN_KEY, nextToken);
-    localStorage.setItem(USER_KEY, JSON.stringify(safeUser));
 
     setToken(nextToken);
-    setUser(safeUser);
+    setUser(nextUser);
+
+    setLoading(false);
   }
 
   function logout() {
+
     localStorage.removeItem(TOKEN_KEY);
-    localStorage.removeItem(USER_KEY);
 
     setToken(null);
     setUser(null);
+
+    window.location.href = "/";
   }
+
+  useEffect(() => {
+
+    if (initialized.current) return;
+    initialized.current = true;
+
+    async function initAuth() {
+
+      const storedToken = localStorage.getItem(TOKEN_KEY);
+
+      if (!storedToken) {
+        setLoading(false);
+        return;
+      }
+
+      try {
+
+        const res = await fetch(
+          "http://localhost:8080/api/auth/me",
+          {
+            headers: {
+              Authorization: `Bearer ${storedToken}`
+            }
+          }
+        );
+
+        const data = await res.json();
+
+        if (data.success) {
+          setUser(data.data);
+        } else {
+          logout();
+        }
+
+      } catch {
+
+        logout();
+
+      } finally {
+
+        setLoading(false);
+
+      }
+    }
+
+    initAuth();
+
+  }, []);
 
   return (
     <AuthContext.Provider
       value={{
         token,
         user,
-        isAuthenticated: Boolean(token),
+        loading,
+        isAuthenticated: !!token,
         login,
-        logout,
+        logout
       }}
     >
       {children}

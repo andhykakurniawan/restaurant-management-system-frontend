@@ -1,17 +1,26 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "@/context/useAuth";
 
-export default function PublicRoute({ children }) {
-  const { isAuthenticated, user } = useAuth();
+export default function PublicRoute() {
 
-  if (isAuthenticated) {
-    const landingPage =
-      user?.role === "ADMIN" || user?.role === "SUPER_ADMIN"
-        ? "/admin/dashboard"
-        : "/dashboard";
+  const { isAuthenticated, user, loading } = useAuth();
 
-    return <Navigate to={landingPage} replace />;
+  if (loading) return null;
+
+  if (isAuthenticated && user) {
+
+    const roleRedirectMap = {
+      SUPER_ADMIN: "/admin/dashboard",
+      ADMIN: "/admin/dashboard"
+    };
+
+    return (
+      <Navigate
+        to={roleRedirectMap[user.role] || "/admin/dashboard"}
+        replace
+      />
+    );
   }
 
-  return children ?? <Outlet />;
+  return <Outlet />;
 }

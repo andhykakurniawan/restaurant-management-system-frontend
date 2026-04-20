@@ -7,6 +7,7 @@ export default function LoginForm() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { login } = useAuth();
+  const [errorMessage, setErrorMessage] = useState(null);
 
   async function handleLogin(e) {
     e.preventDefault();
@@ -20,10 +21,7 @@ export default function LoginForm() {
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({
-            email,
-            password
-          })
+          body: JSON.stringify({ email, password })
         }
       );
 
@@ -33,11 +31,27 @@ export default function LoginForm() {
 
       const data = await response.json();
 
-      login(data.accessToken, data.user);
-      navigate("/admin/dashboard", { replace: true });
+      // simpan token dulu
+      const token = data.accessToken;
+
+      // ambil user dari /auth/me
+      const userResponse = await fetch(
+        "http://localhost:8080/api/auth/me",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      const userData = await userResponse.json();
+
+      login(token, userData.data);
+
+      navigate("/dashboard", { replace: true });
 
     } catch {
-      alert("Email atau password salah");
+      setErrorMessage("Email atau password salah");
     }
   }
 
@@ -106,6 +120,29 @@ export default function LoginForm() {
       <footer className="mt-12 text-center text-xs tracking-widest text-gray-400 uppercase">
         TEMU RASA v1.0
       </footer>
+
+      {errorMessage && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
+          <div className="bg-white rounded-xl shadow-xl w-87.5 p-6 text-center">
+
+            <h2 className="text-lg font-bold text-red-600">
+              Login gagal
+            </h2>
+
+            <p className="mt-2 text-gray-600">
+              {errorMessage}
+            </p>
+
+            <button
+              onClick={() => setErrorMessage(null)}
+              className="mt-5 w-full rounded-lg bg-[#C49A6C] py-2 text-white font-semibold hover:bg-[#9F7B4F]"
+            >
+              Tutup
+            </button>
+
+          </div>
+        </div>
+      )}
 
     </div>
   );
