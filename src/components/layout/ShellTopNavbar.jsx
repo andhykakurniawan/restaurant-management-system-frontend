@@ -1,15 +1,19 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/context/useAuth";
-import { sidebarMenu } from "@/config/sidebarMenu";
+import { menuByRole } from "@/utils/menuByRole";
 import { Menu, LogOut, Shield } from "lucide-react"; // Gunakan ikon supaya lebih pro
 
 export default function ShellTopNavbar({ onMenuClick }) {
   const navigate = useNavigate();
   const location = useLocation();
-  const currentPage = sidebarMenu.find((item) =>
+  const { user, logout } = useAuth();
+
+  const currentMenu =
+    menuByRole[user?.role] || [];
+
+  const currentPage = currentMenu.find((item) =>
     location.pathname.startsWith(item.path)
   );
-  const { user, logout } = useAuth();
 
   function handleLogout() {
     logout();
@@ -31,10 +35,10 @@ export default function ShellTopNavbar({ onMenuClick }) {
         {/* Brand/Page Info - Diperbaiki Hierarkinya */}
         <div>
           <div className="flex items-center gap-2 mb-0.5">
-             <span className="h-1.5 w-1.5 rounded-full bg-temu-bronze animate-pulse"></span>
-             <p className="text-[10px] font-black uppercase tracking-[0.3em] text-temu-coffee">
-               Management System
-             </p>
+            <span className="h-1.5 w-1.5 rounded-full bg-temu-bronze animate-pulse"></span>
+            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-temu-coffee">
+              Management System
+            </p>
           </div>
           <h1 className="text-3xl font-bold tracking-tight text-temu-cream">
             {currentPage?.label || "Dashboard"}

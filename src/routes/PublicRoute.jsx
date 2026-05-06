@@ -1,5 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "@/context/useAuth";
+import { getDashboardRoute } from "@/utils/getDashboardRoute";
 
 export default function PublicRoute() {
 
@@ -8,15 +9,9 @@ export default function PublicRoute() {
   if (loading) return null;
 
   if (isAuthenticated && user) {
-
-    const roleRedirectMap = {
-      SUPER_ADMIN: "/admin/dashboard",
-      ADMIN: "/admin/dashboard"
-    };
-
     return (
       <Navigate
-        to={roleRedirectMap[user.role] || "/admin/dashboard"}
+        to={getDashboardRoute(user.role)}
         replace
       />
     );

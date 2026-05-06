@@ -1,7 +1,11 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import LoginPage from "./pages/LoginPage";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import AdminRouter from "./app/AdminRouter";
+import WaiterRouter from "./app/WaiterRouter";
+import KitchenRouter from "./app/KitchenRouter";
+import CashierRouter from "./app/CashierRouter";
+import WarehouseRouter from "./app/WarehouseRouter";
+import LoginPage from "./features/shared/auth/LoginPage";
 import PublicRoute from "./routes/PublicRoute";
-import AppRouter from "./app/router";
 
 export default function App() {
   return (
@@ -14,7 +18,19 @@ export default function App() {
         </Route>
 
         {/* ADMIN AREA */}
-        <Route path="/admin/*" element={<AppRouter />} />
+        <Route path="/admin/*" element={<AdminRouter />} />
+
+        {/* WAITER AREA */}
+        <Route path="/waiter/*" element={<WaiterRouter />} />
+
+        {/* KITCHEN AREA */}
+        <Route path="/kitchen/*" element={<KitchenRouter />} />
+
+        {/* CASHIER AREA */}
+        <Route path="/cashier/*" element={<CashierRouter />} />
+
+        {/* WAREHOUSE AREA */}
+        <Route path="/warehouse/*" element={<WarehouseRouter />} />
 
         {/* REDIRECT OLD DASHBOARD */}
         <Route

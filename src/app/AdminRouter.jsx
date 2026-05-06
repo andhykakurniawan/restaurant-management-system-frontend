@@ -2,8 +2,7 @@ import { Routes, Route } from "react-router-dom";
 
 import ProtectedRoute from "@/routes/ProtectedRoute";
 import DashboardLayout from "@/components/layout/DashboardLayout";
-
-import DashboardPage from "@/pages/DashboardPage";
+import AdminDashboardPage from "@/features/admin/dashboard/pages/AdminDashboardPage";
 import SettingPage from "@/pages/SettingPage";
 import CategoryPage from "@/features/category/CategoryPage";
 import MenuPage from "@/features/menu/MenuPage";
@@ -13,7 +12,7 @@ import OrderPage from "@/features/order/OrderPage";
 import PaymentPage from "@/features/payment/PaymentPage";
 import UserPage from "@/features/user/UserPage";
 
-export default function AppRouter() {
+export default function AdminRouter() {
     return (
         <Routes>
             <Route
@@ -22,7 +21,7 @@ export default function AppRouter() {
                 }
             >
                 <Route element={<DashboardLayout />}>
-                    <Route path="dashboard" element={<DashboardPage />} />
+                    <Route path="dashboard" element={<AdminDashboardPage />} />
                     <Route path="categories" element={<CategoryPage />} />
                     <Route path="menus" element={<MenuPage />} />
                     <Route path="menucategories" element={<MenuBookPage />} />

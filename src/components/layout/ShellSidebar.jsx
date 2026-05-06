@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { sidebarMenu } from "@/config/sidebarMenu";
+import { menuByRole } from "@/utils/menuByRole";
 import { useAuth } from "@/context/useAuth";
 import { ChevronRight, ShieldCheck } from "lucide-react";
 
@@ -11,9 +11,7 @@ export default function ShellSidebar({ collapsed, open, onClose }) {
   const location = useLocation();
   const { user } = useAuth();
 
-  const filteredMenu = sidebarMenu.filter((item) =>
-    item.roles.includes(user?.role || "")
-  );
+  const filteredMenu = menuByRole[user?.role] || [];
 
   return (
     <>

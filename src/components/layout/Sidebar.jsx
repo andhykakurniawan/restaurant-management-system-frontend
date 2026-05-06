@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { sidebarMenu } from "@/config/sidebarMenu";
+import { menuByRole } from "@/utils/menuByRole";
 import { useAuth } from "@/context/useAuth";
 import { ChevronRight } from "lucide-react"; // Tambahkan ini
 
@@ -11,9 +11,7 @@ export default function Sidebar({ collapsed }) {
   const location = useLocation();
   const { user } = useAuth();
 
-  const filteredMenu = sidebarMenu.filter((item) =>
-    item.roles.includes(user?.role || "")
-  );
+  const filteredMenu = menuByRole[user?.role] || [];
 
   return (
     <aside className={`flex h-screen flex-col bg-temu-darker border-r border-temu-coffee/10 text-temu-cream transition-all duration-500 ease-in-out ${collapsed ? "w-20" : "w-72"}`}>

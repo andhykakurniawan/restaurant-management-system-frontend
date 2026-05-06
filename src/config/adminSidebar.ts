@@ -10,68 +10,59 @@ import {
   User,
 } from "lucide-react";
 
-export const sidebarMenu = [
+export const adminSidebar = [
   {
     label: "Dashboard",
     shortLabel: "DB",
     path: "/admin/dashboard",
     icon: LayoutDashboard,
-    roles: ["SUPER_ADMIN", "ADMIN"],
   },
   {
     label: "Categories",
     shortLabel: "CT",
     path: "/admin/categories",
     icon: FolderTree,
-    roles: ["SUPER_ADMIN", "ADMIN"],
   },
   {
     label: "Menu",
     shortLabel: "MN",
     path: "/admin/menus",
     icon: Utensils,
-    roles: ["SUPER_ADMIN", "ADMIN"],
   },
   {
     label: "Ingredients",
     shortLabel: "ID",
     path: "/admin/ingredients",
     icon: Refrigerator,
-    roles: ["SUPER_ADMIN", "ADMIN"],
   },
   {
     label: "Menu Book",
     shortLabel: "MI",
     path: "/admin/menucategories",
     icon: BookCheck,
-    roles: ["SUPER_ADMIN", "ADMIN"],
   },
   {
     label: "Data Order",
     shortLabel: "DO",
     path: "/admin/orders",
     icon: ShoppingCart,
-    roles: ["SUPER_ADMIN", "ADMIN"],
   },
   {
     label: "Data Payments",
     shortLabel: "DP",
     path: "/admin/payments",
     icon: Wallet,
-    roles: ["SUPER_ADMIN", "ADMIN"],
   },
   {
     label: "User Management",
     shortLabel: "UM",
     path: "/admin/users",
     icon: User,
-    roles: ["SUPER_ADMIN", "ADMIN"],
   },
   {
     label: "Settings",
     shortLabel: "ST",
     path: "/admin/settings",
     icon: Settings,
-    roles: ["SUPER_ADMIN", "ADMIN"],
   },
 ];

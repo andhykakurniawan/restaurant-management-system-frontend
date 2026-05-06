@@ -1,5 +1,6 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "@/context/useAuth";
+import { getDashboardRoute } from "@/utils/getDashboardRoute";
 
 export default function ProtectedRoute({ allowedRoles }) {
 
@@ -16,7 +17,7 @@ export default function ProtectedRoute({ allowedRoles }) {
     allowedRoles?.length &&
     (!user?.role || !allowedRoles.includes(user.role))
   ) {
-    return <Navigate to="/admin/dashboard" replace />;
+    return <Navigate to={getDashboardRoute(user.role)} replace />;
   }
 
   return <Outlet />;
