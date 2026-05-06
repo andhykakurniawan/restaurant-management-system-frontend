@@ -7,7 +7,7 @@ export default function MenuDetail({
   isOpen,
   onClose,
   menu,
-  categoryName,
+  // categoryName,
 }) {
   const {
     menuingredients,
@@ -61,16 +61,16 @@ export default function MenuDetail({
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            {/* <div className="grid grid-cols-2 gap-4"> */}
               <div className="p-5 rounded-4xl bg-white/3 border border-white/5">
                 <p className="text-[9px] text-zinc-500 font-black uppercase tracking-widest mb-1">Price</p>
                 <p className="text-xl font-bold text-emerald-400">Rp {menu.price?.toLocaleString()}</p>
               </div>
-              <div className="p-5 rounded-4xl bg-white/3 border border-white/5">
+              {/* <div className="p-5 rounded-4xl bg-white/3 border border-white/5">
                 <p className="text-[9px] text-zinc-500 font-black uppercase tracking-widest mb-1">Category</p>
                 <p className="text-xl font-bold text-white leading-tight">{categoryName || "Maincourse"}</p>
-              </div>
-            </div>
+              </div> */}
+            {/* </div> */}
 
             <div className="p-6 rounded-4xl bg-black/40 border border-white/5 italic text-sm text-zinc-400 leading-relaxed">
               "{menu.description || "No description provided."}"

@@ -6,7 +6,7 @@ export default function MenuModal({
     isOpen,
     onClose,
     onSubmit,
-    categories,
+    // categories,
     initialData
 }) {
     const isEdit = !!initialData
@@ -91,8 +91,8 @@ export default function MenuModal({
                     </div>
 
                     {/* 2. Category & Price */}
-                    <div className="grid grid-cols-2 gap-4">
-                        <div className="space-y-1">
+                    {/* <div className="grid grid-cols-2 gap-4"> */}
+                        {/* <div className="space-y-1">
                             <label className={labelClass}>Category</label>
                             <select
                                 name="categoryId"
@@ -108,7 +108,7 @@ export default function MenuModal({
                                     </option>
                                 ))}
                             </select>
-                        </div>
+                        </div> */}
 
                         <div className="space-y-1">
                             <label className={labelClass}>Price</label>
@@ -121,7 +121,7 @@ export default function MenuModal({
                                 required
                             />
                         </div>
-                    </div>
+                    {/* </div> */}
 
                     {/* 3. Description Area */}
                     <div className="space-y-1">
