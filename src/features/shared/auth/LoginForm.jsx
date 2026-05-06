@@ -2,6 +2,26 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/useAuth";
 
+function getDashboardRoute(role) {
+  switch (role) {
+    case "SUPER_ADMIN":
+    case "ADMIN":
+      return "/admin/dashboard";
+
+    case "WAITER":
+      return "/waiter/dashboard";
+
+    case "CASHIER":
+      return "/cashier/dashboard";
+
+    case "KITCHEN":
+      return "/kitchen/dashboard";
+
+    default:
+      return "/login";
+  }
+}
+
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -48,7 +68,7 @@ export default function LoginForm() {
 
       login(token, userData.data);
 
-      navigate("/dashboard", { replace: true });
+      navigate(getDashboardRoute(userData.data.role), { replace: true });
 
     } catch {
       setErrorMessage("Email atau password salah");
