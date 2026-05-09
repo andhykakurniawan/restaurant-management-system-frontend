@@ -10,7 +10,7 @@ import IngredientPage from "@/features/admin/ingredient/IngredientPage";
 import MenuBookPage from "@/features/admin/menucategories/MenuBookPage";
 import OrderPage from "@/features/admin/order/OrderPage";
 import PaymentPage from "@/features/admin/payment/PaymentPage";
-import UserPage from "@/features/admin/user/UserPage";
+import UserManagementPage from "@/features/admin/user/UserManagementPage";
 
 export default function AdminRouter() {
     return (
@@ -28,7 +28,7 @@ export default function AdminRouter() {
                     <Route path="ingredients" element={<IngredientPage />} />
                     <Route path="payments" element={<PaymentPage />} />
                     <Route path="orders" element={<OrderPage />} />
-                    <Route path="users" element={<UserPage />} />
+                    <Route path="users" element={<UserManagementPage />} />
                     <Route path="settings" element={<SettingPage />} />
                 </Route>
             </Route>
