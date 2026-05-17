@@ -4,6 +4,7 @@ The frontend dashboard for the **Temu Rasa** Restaurant Management System. This 
 
 This project is engineered as a robust, production-ready operational dashboard rather than a simple landing page. Routing is strictly decoupled by role, the UI shell is highly reusable, and the CRUD logic is cleanly isolated within the `api` and `hooks` layers.
 
+---
 
 ## Tech Stack
 
@@ -13,6 +14,7 @@ This project is engineered as a robust, production-ready operational dashboard r
 - **HTTP Client:** Axios
 - **Icons:** Lucide React
 
+---
 
 ## Key Features
 
@@ -33,6 +35,8 @@ This project is engineered as a robust, production-ready operational dashboard r
 - **Reusable UI Components:** Standardized components including data tables, modals, page headers, stat cards, and reusable filter bars.
 - **Soft-Delete Workflow:** Implements a soft-delete style user flow, allowing data deletion and restoration capabilities for specific resources.
 
+---
+
 ## Roles and Route Mapping
 
 | Role | Default Route | Workspace |
@@ -46,8 +50,11 @@ This project is engineered as a robust, production-ready operational dashboard r
 
 > **Note:** The primary routes are defined in `src/App.jsx`, which then delegates routing to role-specific sub-routers inside the `src/app` directory.
 
+---
 
 ## Project Structure
+
+```text
 src/
 ├── app/                  # Sub-routers per role (Admin, Waiter, etc.)
 ├── assets/               # Local static assets (images, logos, etc.)
@@ -69,17 +76,23 @@ src/
 ├── theme/                # Color tokens and theme customization
 └── utils/                # Helper utilities (Role-to-menu matching)
 
+```
+
+---
 
 ## Architecture & Code Patterns
 
 Every domain feature inside the `features/` directory follows a strict separation of concerns pattern:
 
+```text
 features/admin/<module>/
 ├── api/                  # Direct API requests to the backend
 ├── components/           # Module-specific UI (Tables, Modals, Forms)
 ├── hooks/                # Local state management + data fetching/refresh logic
 ├── type.ts               # TypeScript definitions for payloads & response shapes
 └── <Page>.jsx            # Page container / Entry point
+
+```
 
 ### CRUD Data Flow:
 
@@ -88,6 +101,7 @@ features/admin/<module>/
 3. Upon a successful data mutation (`create`/`update`/`delete`/`restore`), the hook automatically triggers a re-fetch to update the local state.
 4. The **UI Components** (Table/Modal) receive clean data arrays and action callbacks passed down from the container page.
 
+---
 
 ## Backend API Integration
 
@@ -113,6 +127,8 @@ This frontend is designed to consume the **Temu Rasa Restaurant Management Backe
 * Shifts: `/shifts`
 * Attendance: `/attendances`
 
+---
+
 ## Developer Notes
 
 * **Path Aliasing:** This project uses the `@` path alias pointing directly to the `src/` directory to avoid messy relative imports.
@@ -123,6 +139,8 @@ This frontend is designed to consume the **Temu Rasa Restaurant Management Backe
 * Double-check the filename `postcss.congig.js`, which appears to be a typo for `postcss.config.js`. If Tailwind styles fail to compile in certain environments, this is your primary culprit.
 * The `localStorage` keys for persisting the sidebar state are currently inconsistent: it reads from `sidebar-collapsed` but writes to `sidebarCollapsed`. This needs synchronization so the sidebar collapse state correctly persists across page reloads.
 
+---
+
 ## Getting Started
 
 ### 1. Install Dependencies
@@ -132,10 +150,14 @@ Ensure you have Node.js installed in your environment, then run:
 ```bash
 npm install
 
+```
+
 ### 2. Run the Development Server
 
 ```bash
 npm run dev
+
+```
 
 ### 3. Build & Preview Production
 
@@ -144,19 +166,30 @@ To compile a production-ready build:
 ```bash
 npm run build
 
+```
+
 To preview the compiled production build locally:
 
 ```bash
 npm run preview
+
+```
 
 ### 4. Code Linting
 
 ```bash
 npm run lint
 
+```
+
+---
 
 ## Author
 
 **Andhyka Hendra Kurniawan**
 
 GitHub: [@andhykakurniawan](https://github.com/andhykakurniawan)
+
+```</Page>
+
+```
