@@ -17,6 +17,6 @@ export function getDashboardRoute(role) {
       return "/warehouse/dashboard";
 
     default:
-      return "/";
+      return "/login";
   }
 }

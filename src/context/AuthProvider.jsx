@@ -32,7 +32,16 @@ export default function AuthProvider({ children }) {
     setToken(null);
     setUser(null);
 
-    window.location.href = "/";
+    window.location.href = "/login";
+  }
+
+  function clearSession() {
+
+    localStorage.removeItem(TOKEN_KEY);
+
+    setToken(null);
+    setUser(null);
+
   }
 
   useEffect(() => {
@@ -65,12 +74,12 @@ export default function AuthProvider({ children }) {
         if (data.success) {
           setUser(data.data);
         } else {
-          logout();
+          clearSession();
         }
 
       } catch {
 
-        logout();
+        clearSession();
 
       } finally {
 
