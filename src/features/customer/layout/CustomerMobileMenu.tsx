@@ -17,7 +17,7 @@ const links = [
 export default function CustomerMobileMenu({ isOpen, onClose }: CustomerMobileMenuProps) {
   return (
     <div
-      className={`fixed inset-0 z-[60] bg-black/70 backdrop-blur-md transition md:hidden ${
+      className={`fixed inset-0 z-60g-black/70 backdrop-blur-md transition md:hidden ${
         isOpen ? "opacity-100" : "pointer-events-none opacity-0"
       }`}
     >
@@ -45,7 +45,7 @@ export default function CustomerMobileMenu({ isOpen, onClose }: CustomerMobileMe
               key={link.label}
               to={link.path}
               onClick={onClose}
-              className="rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4 text-sm font-bold uppercase tracking-[0.16em] text-temu-muted"
+              className="rounded-2xl border border-white/10 bg-white/3 px-5 py-4 text-sm font-bold uppercase tracking-[0.16em] text-temu-muted"
             >
               {link.label}
             </Link>
