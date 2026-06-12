@@ -52,7 +52,7 @@ export default function LoginForm() {
       const data = await response.json();
 
       // simpan token dulu
-      const token = data.accessToken;
+      const token = data.data.accessToken;
 
       // ambil user dari /auth/me
       const userResponse = await fetch(
@@ -70,8 +70,12 @@ export default function LoginForm() {
 
       navigate(getDashboardRoute(userData.data.role), { replace: true });
 
-    } catch {
-      setErrorMessage("Email atau password salah");
+    } catch (error) {
+      console.error(error);
+
+      setErrorMessage(
+        error.message || "Terjadi kesalahan saat login"
+      );
     }
   }
 
